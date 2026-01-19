@@ -39,13 +39,13 @@ app.use(helmet({contentSecurityPolicy :false}));
 
 app.use(function (req, res, next) {
   //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-  const allowedOrigins = ['http://3.22.54.143:3000','http://localhost:4200','https://your-live-domain.com'];
+  const allowedOrigins = ['http://3.22.54.143:3000','http://localhost:4200','https://backendsearchyaar.onrender.com'];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE','OPTIONS');
 
   // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');

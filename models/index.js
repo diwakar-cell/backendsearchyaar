@@ -20,6 +20,12 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
         rejectUnauthorized: false,
       },
     },
+    pool: {
+    max: 10,
+    min: 0,
+    acquire: 120000, // 30s
+    idle: 30000,    // 10s
+  },
   // }),
 });
 
