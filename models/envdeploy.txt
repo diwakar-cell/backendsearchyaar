@@ -1,0 +1,17 @@
+
+
+
+JWT_TIMEOUT_DURATION=30 days
+JWT_SECRET_KEY=ugdv$527341s@
+EMAIL_SERVICES = gmail
+
+NODE_ENV=development
+USERNAME_LOCAL=root
+
+
+DATABASE_URL="postgresql://postgres.zmqxosledycsnlnycoil:@Diwakar_123@aws-1-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+
+
+DIRECT_URL="postgresql://postgres.zmqxosledycsnlnycoil:@Diwakar_123@aws-1-ap-south-1.pooler.supabase.com:5432/postgres"
+
+
