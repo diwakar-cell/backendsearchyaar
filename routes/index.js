@@ -9,6 +9,7 @@ router.get('/test', (req, res) => {
 
 router.use('/api/auth', require('./authRoute'));
 router.use('/api/search', require('./searchRoute'));
+router.use('/api/service', require('./serviceListingRoutes'));
 
 // router.use('/', require('./paymentRoute'));
 
