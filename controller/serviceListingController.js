@@ -1,4 +1,4 @@
-const { ServiceListing, ListingMedia,User, sequelize } = require('../models');
+const { ServiceListing,Media, ListingMedia,User, sequelize } = require('../models');
 
 exports.createServiceListing = async (req, res) => {
     const user_id = req?.userData.id;
@@ -237,3 +237,32 @@ exports.getServiceListingById = async (req, res) => {
     });
   }
 };
+
+
+exports.uploadMedia = async (req, res) => {
+    try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "File is required" });
+    }
+
+    const media = await Media.create({
+      original_name: req.file.originalname,
+      file_name: req.file.filename,
+      file_type: req.file.mimetype.split("/")[0],
+      mime_type: req.file.mimetype,
+      file_size: req.file.size,
+      storage_path: req.file.path,
+      url: `/uploads/media/${req.file.filename}`,
+      uploaded_by: req.user?.id || null
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Media uploaded successfully",
+      data: {id:media?.id,url:media?.url}
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Upload failed" });
+  }
+}

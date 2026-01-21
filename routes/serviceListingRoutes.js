@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const serviceListingController = require('../controller/serviceListingController');
 const { verifyToken } = require('../utills/helper');
+const upload = require('../middleware/upload,js');
 
 router.post(
   '/service-listing',verifyToken,
@@ -28,5 +29,6 @@ router.get(
   serviceListingController.getServiceListingById
 );
 
+router.post("/upload", upload.single("file"),serviceListingController.uploadMedia);
 
 module.exports = router;

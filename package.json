@@ -26,7 +26,7 @@
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "eslint": "^9.38.0",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "express-jwt-blacklist": "^1.1.0",
     "express-rate-limit": "^8.1.0",
     "express-session": "^1.18.2",
@@ -48,7 +48,8 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "sequelize-cli": "^6.6.3"
