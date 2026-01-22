@@ -31,4 +31,9 @@ router.get(
 
 router.post("/upload", upload.single("file"),serviceListingController.uploadMedia);
 
+router.delete(
+  "/media/:id",
+  serviceListingController.deleteMedia
+);
+
 module.exports = router;

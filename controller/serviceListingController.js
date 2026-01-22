@@ -1,4 +1,6 @@
 const { ServiceListing,Media, ListingMedia,User, sequelize } = require('../models');
+const path = require("path");
+const fs = require("fs");
 
 exports.createServiceListing = async (req, res) => {
     const user_id = req?.userData.id;
@@ -266,3 +268,48 @@ exports.uploadMedia = async (req, res) => {
     res.status(500).json({ success: false, message: "Upload failed" });
   }
 }
+
+
+exports.deleteMedia = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find media
+    const media = await Media.findByPk(id);
+    if (!media) {
+      return res.status(404).json({
+        success: false,
+        message: "Media not found",
+      });
+    }
+
+    // Optional: ownership check
+    if (media.uploaded_by && media.uploaded_by.toString() !== req.user?.id) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    // Delete file from storage
+    const filePath = path.resolve(media.storage_path);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
+    // Delete DB record
+    await media.destroy()
+
+    res.status(200).json({
+      success: true,
+      message: "Media deleted successfully",
+    });
+
+  } catch (error) {
+    console.error("Delete media error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete media",
+    });
+  }
+};

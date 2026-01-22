@@ -69,3 +69,43 @@
  *       500:
  *         description: Internal server error
  */
+
+/**
+ * @swagger
+ * /api/service/media/{id}:
+ *   delete:
+ *     summary: Delete uploaded media file
+ *     tags: [Media]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Media ID to delete
+ *         schema:
+ *           type: string
+ *           example: 65a3f2c9c1e4a8b123456789
+ *     responses:
+ *       200:
+ *         description: Media deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Media deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (Not owner or no permission)
+ *       404:
+ *         description: Media not found
+ *       500:
+ *         description: Internal server error
+ */
