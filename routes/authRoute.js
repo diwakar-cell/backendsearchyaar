@@ -12,7 +12,7 @@ router.get('/test', (req, res) => {
 })
 router.post('/signup',AuthController.signup);
 // router.post('/upload',verifyToken,upload.single('image'),AuthController.upload);
-
+router.put('/update/:id', AuthController.updateUserById);
    
 router.post('/login',AuthController.login);
 // router.post('/login',loginValidationRules(),validate,AuthController.login);

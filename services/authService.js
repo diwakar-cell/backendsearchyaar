@@ -15,63 +15,45 @@ const { verifyAccountEmail } = require('../utills/emailTemplate.js/verifyAccount
 
 
 exports.signup = async (data) => {
-  const { fullName, email, mobile, gender, password } = data;
+  const { fullName, email, mobile, gender, password,type = 'normal' } = data;
+  if (!email) throw new ApiError(400, 'Email is required');
+  if (!fullName) throw new ApiError(400, 'Full name is required');
+
+  if (type === 'normal') {
+    if (!password) throw new ApiError(400, 'Password is required for normal signup');
+    if (!gender) throw new ApiError(400, 'Gender is required for normal signup');
+  }
   // Check if user already exists
   const existing = await User.findOne({ where: { email } });
   if (existing) throw new ApiError(404, 'Email already exist');
 
   //  Hash password
-  const passwordHash = await Utill.hashPassword(password);
+  let passwordHash =null;
+  if (password){
+ passwordHash = await Utill.hashPassword(password);
+  }
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const otpExpires = Date.now() + 10 * 60 * 1000; // 10 mins
   // Create user
   let user = await User.create({
     fullName,
     email,
-    mobile,
-    gender,
+    mobile :mobile || null,
+    gender :gender || null,
     password: passwordHash,
+    type,
     otp,
     otp_expires: otpExpires,
-    is_verified: false
+    is_verified: type!=='normal'?true:false
   });
 
   // Verification link
+  if (type === 'normal') {
   const verifyLink = `https://www.figma.com/design/YRgoSLPhzxBB3bMGfWXP3Y/Searchyaar?node-id=258-574&p=f`;
-  // const verifyLink = `${process.env.FRONTEND_URL}/verify-account?email=${encodeURIComponent(email)}`;
-
-  // // Email HTML
-  // const html = `
-  // <!doctype html>
-  // <html>
-  //   <body style="font-family: Arial, sans-serif; background:#f4f6f8; padding:20px;">
-  //     <div style="max-width:600px; margin:auto; background:#ffffff; padding:30px; border-radius:8px;">
-  //       <h2>Welcome to Searchyaar 🎉</h2>
-  //       <p>Hi <b>${fullName}</b>,</p>
-  //       <p>Your account has been created successfully.</p>
-
-  //       <p><b>Your OTP:</b> <span style="font-size:20px;">${otp}</span></p>
-
-  //       <p>Click the button below to verify your account:</p>
-
-  //       <a href="${verifyLink}"
-  //         style="display:inline-block; padding:12px 25px; background:#4CAF50; color:#fff; text-decoration:none; border-radius:5px;">
-  //         Verify Account
-  //       </a>
-
-  //       <p style="margin-top:20px;">
-  //         OTP is valid for <b>10 minutes</b>. Do not share it with anyone.
-  //       </p>
-
-  //       <br/>
-  //       <p>Thanks & regards,<br/><b>Searchyaar Team</b></p>
-  //     </div>
-  //   </body>
-  // </html>
-  // `;
+ 
 
   const html = verifyAccountEmail({fullName,email,otp,verifyLink})
-
+  
   await Mailer.sendMail(
     process.env.MAIL_USERNAME, // from
     email,
@@ -79,7 +61,7 @@ exports.signup = async (data) => {
     html
   );
 
-
+  }
 
   //Generate token
   const token = await Utill.generateToken({ id: user.id });
@@ -221,3 +203,47 @@ exports.resetPassword = async (email, password) => {
     throw error;
   }
 };
+
+
+exports.updateUserById = async (data) => {
+  const { userId, fullName, mobile, gender, password, type } = data;
+
+  //  Find the user
+  const user = await User.findByPk(userId);
+  if (!user) throw new ApiError(404, 'User not found');
+
+  //  Determine type for validation
+  const userType = type || user.type; // keep existing type if not provided
+
+  //  Validate required fields for normal users
+  if (userType === 'normal') {
+    if (!password && !user.password) {
+      throw new ApiError(400, 'Password is required for normal user');
+    }
+    if (!gender && !user.gender) {
+      throw new ApiError(400, 'Gender is required for normal user');
+    }
+  }
+
+  //  Hash password if provided
+  let passwordHash = user.password;
+  if (password) {
+    passwordHash = await Utill.hashPassword(password);
+  }
+
+  //  Update user
+  await user.update({
+    fullName: fullName || user.fullName,
+    mobile: mobile || user.mobile,
+    gender: gender || user.gender,
+    password: passwordHash,
+    type: userType
+  });
+
+  //  Prepare response
+  const updatedUser = user.toJSON();
+  delete updatedUser.password; // don't return password
+
+  return updatedUser;
+};
+

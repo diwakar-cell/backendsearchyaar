@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       fullName: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
       },
 
       email: {
@@ -16,7 +16,14 @@ module.exports = (sequelize, DataTypes) => {
 
       password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true,
+        validate: {
+          requiredIfNormal(value) {
+            if (this.type === 'normal' && !value) {
+              throw new Error('Password is required for normal login');
+            }
+          }
+        }
       },
 
       mobile: {
@@ -24,9 +31,22 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
       },
 
+      type: {
+        type: DataTypes.ENUM('normal', 'google', 'facebook', 'apple'),
+        allowNull: false,
+        defaultValue: 'normal'
+      },
+
       gender: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        validate: {
+          requiredIfNormal(value) {
+            if (this.type === 'normal' && !value) {
+              throw new Error('Gender is required for normal login');
+            }
+          }
+        }
       },
 
       //  OTP for email verification

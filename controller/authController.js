@@ -14,13 +14,14 @@ const authService = require('../services/authService');
 
 exports.signup = async (req, res,next) => {
     try {
-    const { fullName, email, mobile, gender, password } = req.body;
+    const { fullName, email, mobile, gender, password, type } = req.body;
     const result = await authService.signup({
       fullName,
       email,
       mobile,
       gender,
-      password
+      password,
+      type
     });
 
     return apiResponse.SignUpSuccessFull(res, result);
@@ -451,3 +452,23 @@ exports.support = async (req, res) => {
   }
 };
 
+
+exports.updateUserById = async (req, res, next) => {
+  try {
+    const userId = req.params.id; // get user ID from URL
+    const { fullName, mobile, gender, password, type } = req.body;
+
+    const result = await authService.updateUserById({
+      userId,
+      fullName,
+      mobile,
+      gender,
+      password,
+      type
+    });
+
+    return apiResponse.SuccessResponseWithData(res, 'User updated successfully',result);
+  } catch (error) {
+    next(error);
+  }
+};

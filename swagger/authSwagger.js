@@ -20,7 +20,7 @@
  *             properties:
  *               fullName:
  *                 type: string
- *                 example: John
+ *                 example: John Doe
  *               email:
  *                 type: string
  *                 example: johndoe@example.com
@@ -29,14 +29,22 @@
  *                 example: Pass@123
  *               gender:
  *                 type: string
- *                 example: male,female
+ *                 example: male
+ *               mobile:
+ *                 type: string
+ *                 example: 9876543210
+ *               type:
+ *                 type: string
+ *                 enum: [normal, google, facebook, apple]
+ *                 example: normal
  *     responses:
  *       200:
  *         description: User registered successfully
  *       400:
  *         description: Validation error or missing fields
+ *       409:
+ *         description: Email already exists
  */
-
 /**
  * @swagger
  * /api/auth/login:
@@ -159,4 +167,53 @@
  *         description: OTP sent successfully
  *       401:
  *         description: Invalid credentials
+ */
+
+
+/**
+ * @swagger
+ * /api/auth/update/{id}:
+ *   put:
+ *     summary: Update user by ID
+ *     tags: [Authentication]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: User ID to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *                 example: John Doe Updated
+ *               email:
+ *                 type: string
+ *                 example: johndoe@example.com
+ *               password:
+ *                 type: string
+ *                 example: NewPass@123
+ *               gender:
+ *                 type: string
+ *                 example: male
+ *               mobile:
+ *                 type: string
+ *                 example: 9876543210
+ *               type:
+ *                 type: string
+ *                 enum: [normal, google, facebook, apple]
+ *                 example: normal
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *       400:
+ *         description: Validation error or missing fields
+ *       404:
+ *         description: User not found
  */
