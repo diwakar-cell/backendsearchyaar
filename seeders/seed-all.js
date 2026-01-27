@@ -72,37 +72,87 @@ module.exports = {
 
       // ----------------- Categories -----------------
       await queryInterface.bulkInsert('categories', [
-        { name: 'Restaurants & Food Places', type: 'service', created_At: new Date(), updated_At: new Date() },
-        { name: 'Hotels & Travel', type: 'service', created_At: new Date(), updated_At: new Date() },
+        { name: 'Restaurants & Food Places', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Hotels & Travel', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Restaurants & Food Places', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Hotels & Travel', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Healthcare & Medical Services', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Education & Training Institutes', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Home Services & Repairs', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Shopping & Retail Stores', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Automobiles (Sales, Service, Rentals)', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Real Estate & Property Services', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Beauty & Personal Care', type: 'service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Professional Services (Legal, Finance)', type: 'service', createdAt: new Date(), updatedAt: new Date() },
         // ... rest
       ], {});
       console.log('✅ Categories inserted');
 
       // ----------------- Products -----------------
       await queryInterface.bulkInsert('products', [
-        { name: 'Electronics (mobiles, laptops, appliances)', type: 'physical', created_At: new Date(), updated_At: new Date() },
-        { name: 'Clothing & fashion wear', type: 'physical', created_At: new Date(), updated_At: new Date() },
+        { name: 'Electronics (mobiles, laptops, appliances)', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Clothing & fashion wear', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Electronics (mobiles, laptops, appliances)', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Clothing & fashion wear', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Furniture & home décor', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Groceries & daily essentials', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Medicines & health supplies', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Jewelry & accessories', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Kitchen appliances & cookware', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Sports & fitness equipment', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Automobiles & auto parts', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Books, stationery & office supplies', type: 'physical', createdAt: new Date(), updatedAt: new Date() },
         // ... rest
       ], {});
       console.log('✅ Products inserted');
 
       // ----------------- Services -----------------
       await queryInterface.bulkInsert('services', [
-        { name: 'Hair Salon services', type: 'personal care', created_At: new Date(), updated_At: new Date() },
+        { name: 'Hair Salon services', type: 'personal care', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Hair Salon services', type: 'personal care', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Electrician, carpenter services', type: 'home service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'AC repair & installation', type: 'home service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'House shifting & packers/movers', type: 'logistics', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Accounting and GST consultation', type: 'finance', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Doctor appointments consultations', type: 'healthcare', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Travel booking & tour packages', type: 'travel', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Catering services for events', type: 'food service', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Car/bike service & repair', type: 'automobile', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Digital Marketing Services', type: 'professional', createdAt: new Date(), updatedAt: new Date() },
         // ... rest
       ], {});
       console.log('✅ Services inserted');
 
       // ----------------- Deals -----------------
       await queryInterface.bulkInsert('deals', [
-        { name: 'Flat 20% off on first-time AC service bookings this week', type: 'discount', created_At: new Date(), updated_At: new Date() },
+        { name: 'Flat 20% off on first-time AC service bookings this week', type: 'discount', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Flat 20% off on first-time AC service bookings this week', type: 'discount', createdAt: new Date(), updatedAt: new Date() },
+        { name: '₹299 health check-up at selected diagnostic centers', type: 'health', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Exclusive room discount (up to 25%) on hotel bookings', type: 'discount', createdAt: new Date(), updatedAt: new Date() },
+        { name: '15% off on gold & diamond jewelry at listed outlets', type: 'discount', createdAt: new Date(), updatedAt: new Date() },
+        { name: '10% cashback on online payments for home cleaning', type: 'cashback', createdAt: new Date(), updatedAt: new Date() },
+        { name: '0 service charges on local packers for same-city', type: 'offer', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Buy 1 Get 1 Free pizza deal at top restaurants near you', type: 'bogo', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Festive offer: 15% off on gold jewelry at listed outlets', type: 'festival', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Food festival weekend showcasing local restaurants', type: 'festival', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Flat 20% off on recharge and DTH', type: 'discount', createdAt: new Date(), updatedAt: new Date() },
         // ... rest
       ], {});
       console.log('✅ Deals inserted');
 
       // ----------------- Events -----------------
       await queryInterface.bulkInsert('events', [
-        { name: 'Food Festival Weekend - Discover top restaurants', type: 'festival', created_At: new Date(), updated_At: new Date() },
+        { name: 'Food Festival Weekend - Discover top restaurants', type: 'festival', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Food Festival Weekend - Discover top restaurants', type: 'festival', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Auto Showcase - Latest bikes & cars from leading dealers', type: 'expo', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Wellness Fair - Free yoga sessions, Near You', type: 'wellness', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Tech Carnival - Mobile stores launching new models', type: 'expo', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Real Estate Showcase - Builders presenting new projects', type: 'expo', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Food festival weekend showcasing local restaurants', type: 'festival', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Art and book fair featuring authors, workshops, exhibits', type: 'fair', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Education open house offering demo classes sessions', type: 'education', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Home expo presenting furniture, decor limited-time deal', type: 'expo', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Photography exhibition showcasing local talent', type: 'exhibition', createdAt: new Date(), updatedAt: new Date() },
         // ... rest
       ], {});
       console.log('✅ Events inserted');
@@ -151,3 +201,4 @@ module.exports = {
     }
   }
 };
+
