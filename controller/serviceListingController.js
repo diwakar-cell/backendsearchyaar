@@ -313,3 +313,55 @@ exports.deleteMedia = async (req, res) => {
     });
   }
 };
+
+exports.getServiceListingByUserId = async (req, res) => {
+  try {
+    const userId =  req?.userData.id; // 👈 from JWT token
+
+    const {
+      page = 1,
+      limit = 10,
+      service_category,
+      city,
+      state
+    } = req.query;
+
+    const offset = (page - 1) * limit;
+
+    const whereClause = { user_id:userId };
+
+    if (service_category) whereClause.service_category = service_category;
+    if (city) whereClause.city = city;
+    if (state) whereClause.state = state;
+
+    const { count, rows } = await ServiceListing.findAndCountAll({
+      where: whereClause,
+      include: [
+        {
+          model: ListingMedia,
+          as: 'ListingMedia'
+        },
+         { model: User, as: 'user', attributes: ['id', 'fullName', 'email'] }
+      ],
+      limit: parseInt(limit),
+      offset: parseInt(offset),
+      order: [['created_At', 'DESC']]
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Service listings fetched successfully',
+      totalRecords: count,
+      currentPage: parseInt(page),
+      totalPages: Math.ceil(count / limit),
+      data: rows
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch service listings',
+      error: error.message
+    });
+  }
+};

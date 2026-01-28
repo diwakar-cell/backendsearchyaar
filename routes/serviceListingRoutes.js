@@ -36,4 +36,11 @@ router.delete(
   serviceListingController.deleteMedia
 );
 
+router.get(
+  '/user-service-listing',
+  verifyToken,
+  serviceListingController.getServiceListingByUserId
+);
+
+
 module.exports = router;

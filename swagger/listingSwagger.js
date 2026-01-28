@@ -257,3 +257,74 @@
  *       500:
  *         description: Internal server error
  */
+
+
+/**
+ * @swagger
+ * /api/service/user-service-listing:
+ *   get:
+ *     summary: Get service listings of logged-in user
+ *     tags: [Service Listing]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *         description: Number of records per page
+ *       - in: query
+ *         name: service_category
+ *         schema:
+ *           type: string
+ *           example: Salon
+ *         description: Filter by service category
+ *       - in: query
+ *         name: state
+ *         schema:
+ *           type: string
+ *           example: Rajasthan
+ *         description: Filter by state
+ *       - in: query
+ *         name: city
+ *         schema:
+ *           type: string
+ *           example: Jaipur
+ *         description: Filter by city
+ *     responses:
+ *       200:
+ *         description: Service listings fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Service listings fetched successfully
+ *                 totalRecords:
+ *                   type: integer
+ *                   example: 5
+ *                 currentPage:
+ *                   type: integer
+ *                   example: 1
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 1
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *       401:
+ *         description: Unauthorized (Invalid or missing token)
+ *       500:
+ *         description: Internal server error
+ */
