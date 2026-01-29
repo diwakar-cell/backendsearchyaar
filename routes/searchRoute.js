@@ -12,11 +12,11 @@ router.get('/test', (req, res) => {
   res.json({ message: 'Auth loginnnn route is working!' });
 })
 router.get('/category',ServiceController.getCategory);
-router.get('/products',ServiceController.getCategory);
+router.get('/products',ServiceController.getAllProductListings);
 router.get('/deals',ServiceController.getCategory);
 router.get('/state',ServiceController.getCategory);
 router.get('/city',ServiceController.getCategory);
-router.get('/events',ServiceController.getCategory);
+router.get('/events',ServiceController.getAllEventsListings);
 router.get('/service',ServiceController.getCategory);
 
 

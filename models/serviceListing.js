@@ -17,8 +17,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      slug: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
 
-      service_category: {
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      sub_type: {
         type: DataTypes.STRING,
         allowNull: false
       },

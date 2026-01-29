@@ -121,10 +121,10 @@ app.use(errorHandler);
 // db.sequelize.sync({ alter: true }).then(() => {
 //   console.log('Database & tables created!');
 // });
-// db.sequelize
-//   .sync({ alter: true })
-//   .then(() => console.log('Database & tables created!'))
-//   .catch(console.error);
+db.sequelize
+  .sync({ alter: true })
+  .then(() => console.log('Database & tables created!'))
+  .catch(console.error);
 
 app.listen(process.env.PORT, () => {
   // logger.info(`Server listening on port ${process.env.PORT}`);

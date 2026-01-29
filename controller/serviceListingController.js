@@ -2,20 +2,103 @@ const { ServiceListing,Media, ListingMedia,User, sequelize } = require('../model
 const path = require("path");
 const fs = require("fs");
 
+
+const slugify = (text) => {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')       // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')   // Remove non-word chars
+    .replace(/\-\-+/g, '-');    // Replace multiple - with single -
+};
+
+// exports.createServiceListing = async (req, res) => {
+//     const user_id = req?.userData.id;
+//   const t = await sequelize.transaction();
+
+//   try {
+//     const {
+//       media,
+//       ...listingData
+//     } = req.body;
+
+//     // 1️⃣ Create Service Listing
+//     const listing = await ServiceListing.create({ ...listingData, user_id }, { transaction: t });
+
+//     // 2️⃣ Create Listing Media (if provided)
+//     if (media && Array.isArray(media) && media.length > 0) {
+//       const mediaPayload = media.map(item => ({
+//         listing_id: listing.id,
+//         urls: item.urls,
+//         description: item.description || null
+//       }));
+
+//       await ListingMedia.bulkCreate(mediaPayload, { transaction: t });
+//     }
+
+//     await t.commit();
+
+//     return res.status(201).json({
+//       success: true,
+//       message: 'Service listing created successfully',
+//       data: listing
+//     });
+
+//   } catch (error) {
+//     await t.rollback();
+
+//     return res.status(500).json({
+//       success: false,
+//       message: 'Failed to create service listing',
+//       error: error.message
+//     });
+//   }
+// };
+
+
 exports.createServiceListing = async (req, res) => {
-    const user_id = req?.userData.id;
+  const user_id = req?.userData?.id;
   const t = await sequelize.transaction();
 
   try {
-    const {
-      media,
-      ...listingData
-    } = req.body;
+    const { media, service_title, ...listingData } = req.body;
 
-    // 1️⃣ Create Service Listing
-    const listing = await ServiceListing.create({ ...listingData, user_id }, { transaction: t });
+    if (!service_title) {
+      return res.status(400).json({
+        success: false,
+        message: 'Title is required to generate slug'
+      });
+    }
 
-    // 2️⃣ Create Listing Media (if provided)
+    //  Generate unique slug
+    let baseSlug = slugify(service_title);
+    let slug = baseSlug;
+    // let count = 1;
+
+    const slugExists = await ServiceListing.findOne({
+  where: { slug: baseSlug }
+});
+
+if (slugExists) {
+  return res.status(409).json({
+    success: false,
+    message: 'Service title already exists. Please use a different title.'
+  });
+}
+
+    //  Create Service Listing
+    const listing = await ServiceListing.create(
+      {
+        ...listingData,
+        service_title,
+        slug,
+        user_id
+      },
+      { transaction: t }
+    );
+
+    // Create Listing Media
     if (media && Array.isArray(media) && media.length > 0) {
       const mediaPayload = media.map(item => ({
         listing_id: listing.id,
@@ -160,7 +243,8 @@ exports.getAllServiceListings = async (req, res) => {
     const {
       page = 1,
       limit = 10,
-      service_category,
+      type,
+      sub_type,
       city,
       state
     } = req.query;
@@ -168,7 +252,8 @@ exports.getAllServiceListings = async (req, res) => {
     const offset = (page - 1) * limit;
 
     const whereClause = {};
-    if (service_category) whereClause.service_category = service_category;
+    if (type) whereClause.type = type;
+    if (sub_type) whereClause.sub_type = sub_type;
     if (city) whereClause.city = city;
     if (state) whereClause.state = state;
 
@@ -321,7 +406,8 @@ exports.getServiceListingByUserId = async (req, res) => {
     const {
       page = 1,
       limit = 10,
-      service_category,
+      type,
+      sub_type,
       city,
       state
     } = req.query;

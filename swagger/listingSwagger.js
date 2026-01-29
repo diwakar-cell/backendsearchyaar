@@ -19,8 +19,9 @@
  *             type: object
  *             required:
  *               - service_title
- *               - service_category
  *               - service_type
+ *               - type
+ *               - sub_type
  *               - business_name
  *               - contact_number
  *               - email
@@ -33,12 +34,15 @@
  *               service_title:
  *                 type: string
  *                 example: Bridal Makeup
- *               service_category:
- *                 type: string
- *                 example: Salon
  *               service_type:
  *                 type: string
+ *                 example: Salon
+ *               type:
+ *                 type: string
  *                 example: Makeup Artist
+ *               sub_type:
+ *                 type: string
+ *                 example: artist
  *               description:
  *                 type: string
  *                 example: Premium bridal makeup services
@@ -211,11 +215,17 @@
  *           example: 10
  *         description: Number of records per page
  *       - in: query
- *         name: service_category
+ *         name: type
  *         schema:
  *           type: string
  *           example: Salon
- *         description: Filter by service category
+ *         description: Filter by type
+ *       - in: query
+ *         name: sub_type
+ *         schema:
+ *           type: string
+ *           example: Salon
+ *         description: Filter by sub type
  *       - in: query
  *         name: state
  *         schema:
@@ -279,11 +289,17 @@
  *           example: 10
  *         description: Number of records per page
  *       - in: query
- *         name: service_category
+ *         name: type
  *         schema:
  *           type: string
  *           example: Salon
- *         description: Filter by service category
+ *         description: Filter by type
+ *       - in: query
+ *         name: sub_type
+ *         schema:
+ *           type: string
+ *           example: Salon
+ *         description: Filter by sub type
  *       - in: query
  *         name: state
  *         schema:
