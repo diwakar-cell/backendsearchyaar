@@ -13,11 +13,11 @@ router.get('/test', (req, res) => {
 })
 router.get('/category',ServiceController.getCategory);
 router.get('/products',ServiceController.getAllProductListings);
-router.get('/deals',ServiceController.getCategory);
+router.get('/deals',ServiceController.getAllDealsListings);
 router.get('/state',ServiceController.getCategory);
 router.get('/city',ServiceController.getCategory);
 router.get('/events',ServiceController.getAllEventsListings);
-router.get('/service',ServiceController.getCategory);
+router.get('/service',ServiceController.getAllServicesListings);
 
 
 

@@ -28,7 +28,7 @@ exports.getCategory = async (req, res,next) => {
 
 exports.getAllProductListings = async (req, res) => {
   try {
-    const type = 'Products';
+    const type = 'products';
 
     const whereClause = {
       type
@@ -67,7 +67,7 @@ exports.getAllProductListings = async (req, res) => {
 };
 exports.getAllEventsListings = async (req, res) => {
   try {
-    const type = 'Events';
+    const type = 'events';
 
     const whereClause = {
       type
@@ -104,4 +104,81 @@ exports.getAllEventsListings = async (req, res) => {
     });
   }
 };
+exports.getAllServicesListings = async (req, res) => {
+  try {
+    const type = 'services';
 
+    const whereClause = {
+      type
+    };
+
+    const { rows, count } = await ServiceListing.findAndCountAll({
+      where: whereClause,
+      include: [
+        {
+          model: ListingMedia,
+          as: 'ListingMedia'
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'fullName', 'email']
+        }
+      ],
+      order: [['created_At', 'DESC']]
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Product listings fetched successfully',
+      totalRecords: count,
+      data: rows
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch product listings',
+      error: error.message
+    });
+  }
+};
+exports.getAllDealsListings = async (req, res) => {
+  try {
+    const type = 'deals';
+
+    const whereClause = {
+      type
+    };
+
+    const { rows, count } = await ServiceListing.findAndCountAll({
+      where: whereClause,
+      include: [
+        {
+          model: ListingMedia,
+          as: 'ListingMedia'
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'fullName', 'email']
+        }
+      ],
+      order: [['created_At', 'DESC']]
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Product listings fetched successfully',
+      totalRecords: count,
+      data: rows
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch product listings',
+      error: error.message
+    });
+  }
+};

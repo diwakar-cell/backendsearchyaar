@@ -72,13 +72,13 @@ module.exports = (sequelize, DataTypes) => {
 
       price_type: {
         type: DataTypes.ENUM('Fixed', 'Hourly', 'Package'),
-        allowNull: false,
+        allowNull: true,
         defaultValue: 'Fixed'
       },
 
       price_amount: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        allowNull: true
       },
 
       opening_time: {

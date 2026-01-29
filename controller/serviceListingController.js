@@ -62,7 +62,7 @@ exports.createServiceListing = async (req, res) => {
   const t = await sequelize.transaction();
 
   try {
-    const { media, service_title, ...listingData } = req.body;
+    const { media, service_title,type, ...listingData } = req.body;
 
     if (!service_title) {
       return res.status(400).json({
@@ -70,6 +70,7 @@ exports.createServiceListing = async (req, res) => {
         message: 'Title is required to generate slug'
       });
     }
+ const normalizedType = type ? type.toLowerCase() : null;
 
     //  Generate unique slug
     let baseSlug = slugify(service_title);
@@ -92,7 +93,8 @@ if (slugExists) {
       {
         ...listingData,
         service_title,
-        slug,
+        slug: baseSlug,
+        type: normalizedType, // always lowercase
         user_id
       },
       { transaction: t }
