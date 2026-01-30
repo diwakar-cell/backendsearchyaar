@@ -8,10 +8,10 @@ const apiResponse = require('../utills/response');
 const Utill = require('../utills/helper');
 const Mailer = require('../utills/mailer');
 
-// const searchService = require('../services/searchService');
+const searchService = require('../services/searchService');
 // const ServiceListing = require('../models/serviceListing');
 // const ListingMedia = require('../models/listingMedia');
-const { ServiceListing,Media, ListingMedia,User, sequelize,searchService } = require('../models');
+const { ServiceListing,Media, ListingMedia,User, sequelize } = require('../models');
 
 
 exports.getCategory = async (req, res,next) => {
