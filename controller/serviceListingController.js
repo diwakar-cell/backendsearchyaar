@@ -418,7 +418,8 @@ exports.getServiceListingByUserId = async (req, res) => {
 
     const whereClause = { user_id:userId };
 
-    if (service_category) whereClause.service_category = service_category;
+    if (type) whereClause.type = type;
+    if (sub_type) whereClause.sub_type = sub_type;
     if (city) whereClause.city = city;
     if (state) whereClause.state = state;
 
